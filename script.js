@@ -105,9 +105,6 @@ const metaThemeColor = document.querySelector('meta[name="theme-color"]');
 const themeSelectorContainer = document.querySelector('.theme-selector-container');
 const themeTrigger = document.querySelector('.theme-selector-trigger');
 
-// Flag: true only when the dropdown is actually visible (user entered the menu area)
-let dropdownIsOpen = false;
-
 // Render theme visually on the page
 function applyTheme(themeObj) {
     body.className = themeObj.id;
@@ -141,30 +138,17 @@ themes.forEach((theme, index) => {
         markActiveOption(index);
     });
 
-    // When hovering over an option, live-preview it — but ONLY when the dropdown is truly open
+    // When hovering over an option, live-preview it
     btn.addEventListener('mouseenter', () => {
-        if (dropdownIsOpen) {
-            applyTheme(theme);
-        }
+        applyTheme(theme);
     });
 
     dropdownMenu.appendChild(btn);
 });
 
-// Mark dropdown as open after a brief delay to prevent accidental preview
-// when the mouse first enters the container/trigger area
-let dropdownOpenTimer = null;
-themeSelectorContainer.addEventListener('mouseenter', () => {
-    dropdownOpenTimer = setTimeout(() => {
-        dropdownIsOpen = true;
-    }, 150);
-});
-
 // When the user stops hovering the options and leaves the menu...
 // revert back to whatever theme was truly selected, ONLY if not force-opened
 themeSelectorContainer.addEventListener('mouseleave', () => {
-    clearTimeout(dropdownOpenTimer);
-    dropdownIsOpen = false;
     if (!themeSelectorContainer.classList.contains('force-open')) {
         applyTheme(themes[appliedThemeIndex]);
     }
