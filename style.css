@@ -1,0 +1,465 @@
+:root {
+  --bg-color: #f3f5f8;
+  --text-color: #1a1a1a;
+  --svg-filter: none;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --tooltip-bg: rgba(0, 0, 0, 0.8);
+  --tooltip-color: white;
+}
+
+body.theme-matte-dark {
+  --bg-color: #1a1a1f;
+  --text-color: #f0f0f0;
+  --svg-filter: invert(0.86) hue-rotate(180deg) sepia(0.2) contrast(1.1) brightness(0.9);
+  --glass-bg: rgba(30, 30, 35, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --tooltip-bg: rgba(255, 255, 255, 0.9);
+  --tooltip-color: black;
+}
+
+body.theme-midnight-blue {
+  --bg-color: #0b1120;
+  --text-color: #e2e8f0;
+  --svg-filter: invert(0.95) hue-rotate(200deg) saturate(1.8) brightness(0.9) contrast(1.15);
+  --glass-bg: rgba(20, 30, 50, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --tooltip-bg: rgba(255, 255, 255, 0.9);
+  --tooltip-color: black;
+}
+
+body.theme-sepia {
+  --bg-color: #e6e0d3;
+  --text-color: #4a3f35;
+  --svg-filter: sepia(0.65) brightness(0.95) contrast(1.1) hue-rotate(-10deg);
+  --glass-bg: rgba(230, 224, 211, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --tooltip-bg: rgba(0, 0, 0, 0.8);
+  --tooltip-color: white;
+}
+
+/* NEW THEMES */
+/* Soft Pastel & Aesthetic Themes */
+/* Soft Pastel & Aesthetic Themes */
+body.theme-sunset-vibe {
+  /* Stronger vibrant sunset gradient */
+  --bg-color: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+  --text-color: #2b1d1d;
+  --svg-filter: saturate(1.8) brightness(0.6) sepia(0.4) hue-rotate(-15deg);
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --hover-bg: rgba(255, 255, 255, 0.6);
+}
+
+body.theme-mint-calm {
+  --bg-color: #f0fdf4;
+  --text-color: #166534;
+  --svg-filter: sepia(0.3) saturate(1.2) hue-rotate(80deg) brightness(0.75);
+  --glass-bg: rgba(240, 253, 244, 0.85);
+  --glass-border: rgba(22, 101, 52, 0.2);
+  --hover-bg: rgba(220, 252, 231, 1);
+}
+
+body.theme-lavender-zen {
+  --bg-color: #faf5ff;
+  --text-color: #581c87;
+  --svg-filter: sepia(0.2) hue-rotate(240deg) saturate(1.5) brightness(0.65);
+  --glass-bg: rgba(250, 245, 255, 0.85);
+  --glass-border: rgba(88, 28, 135, 0.2);
+  --hover-bg: rgba(243, 232, 255, 1);
+}
+
+body.theme-matcha-latte {
+  --bg-color: #f4f5f0;
+  --text-color: #4a5d23;
+  --svg-filter: sepia(0.4) saturate(1.2) hue-rotate(50deg) brightness(0.7);
+  --glass-bg: rgba(244, 245, 240, 0.85);
+  --glass-border: rgba(74, 93, 35, 0.2);
+  --hover-bg: rgba(235, 240, 225, 1);
+}
+
+body.theme-rose-water {
+  --bg-color: #fff1f2;
+  --text-color: #9f1239;
+  --svg-filter: sepia(0.3) saturate(2) hue-rotate(-30deg) brightness(0.75);
+  --glass-bg: rgba(255, 241, 242, 0.85);
+  --glass-border: rgba(159, 18, 57, 0.2);
+  --hover-bg: rgba(255, 228, 230, 1);
+}
+
+body.theme-soft-slate {
+  --bg-color: #f8fafc;
+  --text-color: #334155;
+  --svg-filter: sepia(0.1) hue-rotate(180deg) saturate(1.2) brightness(0.65);
+  --glass-bg: rgba(248, 250, 252, 0.85);
+  --glass-border: rgba(51, 65, 85, 0.2);
+  --hover-bg: rgba(241, 245, 249, 1);
+}
+
+/* ACCESSIBILITY & COLOR BLINDNESS THEMES */
+
+/* High Contrast (For general visual impairment / low vision) 
+   Pure black background, bright yellow/white text for max readability */
+body.theme-high-contrast {
+  --bg-color: #000000;
+  --text-color: #ffff00;
+  --svg-filter: invert(1) grayscale(1) contrast(3) brightness(1.5) drop-shadow(0 0 1px #ffff00);
+  --glass-bg: rgba(0, 0, 0, 1);
+  --glass-border: rgba(255, 255, 0, 1);
+  --hover-bg: rgba(50, 50, 0, 1);
+}
+
+/* Protanopia (Red-Blind)
+   Shifts reds into blues/yellows to avoid the red/green confusion line */
+body.theme-protanopia {
+  --bg-color: #f0f4f8;
+  --text-color: #004488;
+  --svg-filter: hue-rotate(50deg) saturate(1.5) contrast(1.2);
+  --glass-bg: rgba(240, 244, 248, 0.9);
+  --glass-border: rgba(0, 68, 136, 0.3);
+  --hover-bg: rgba(220, 230, 240, 1);
+}
+
+/* Deuteranopia (Green-Blind)
+   Similar to Protanopia, relies heavily on high-contrast blues and yellows */
+body.theme-deuteranopia {
+  --bg-color: #fffdf0;
+  --text-color: #0033aa;
+  --svg-filter: hue-rotate(-30deg) sepia(0.2) saturate(1.8) contrast(1.2);
+  --glass-bg: rgba(255, 253, 240, 0.9);
+  --glass-border: rgba(0, 51, 170, 0.3);
+  --hover-bg: rgba(240, 235, 210, 1);
+}
+
+/* Tritanopia (Blue-Blind)
+   Replaces blues/yellows with high-contrast reds and cyans */
+body.theme-tritanopia {
+  --bg-color: #ffeef0;
+  --text-color: #cc0000;
+  --svg-filter: hue-rotate(170deg) saturate(2) contrast(1.2);
+  --glass-bg: rgba(255, 238, 240, 0.9);
+  --glass-border: rgba(204, 0, 0, 0.3);
+  --hover-bg: rgba(255, 210, 215, 1);
+}
+
+/* Achromatopsia (Total Color Blindness / Monochrome)
+   Relies purely on lightness/darkness contrast */
+body.theme-monochrome {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --svg-filter: grayscale(1) contrast(1.5) brightness(0.8);
+  --glass-bg: rgba(240, 240, 240, 0.9);
+  --glass-border: rgba(0, 0, 0, 0.5);
+  --hover-bg: rgba(200, 200, 200, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 40px 20px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+/* Base styling for the document container */
+.resume-container {
+  width: 100%;
+  max-width: 850px;
+  position: relative;
+  z-index: 10;
+}
+
+.resume-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: var(--svg-filter);
+  transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+/* Clickable links inside the SVG */
+.resume-svg a,
+.resume-container svg a {
+  cursor: pointer;
+}
+
+.resume-container svg a:hover tspan {
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+
+/* Download PDF Button */
+.download-pdf-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+}
+
+.download-pdf-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  filter: brightness(1.1);
+}
+
+.download-pdf-btn svg {
+  flex-shrink: 0;
+}
+
+/* Glassmorphic Theme Selector Dropdown */
+.theme-selector-container {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  z-index: 100;
+  font-family: 'Inter', sans-serif;
+}
+
+.theme-selector-trigger {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  color: var(--text-color);
+  padding: 12px 20px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.theme-selector-trigger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  /* Use filter logic for hover instead of hover-bg var to save CSS space */
+  filter: brightness(1.1);
+}
+
+.theme-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.chevron-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.theme-selector-container:hover .chevron-icon {
+  transform: rotate(180deg);
+}
+
+.theme-dropdown {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 0;
+  /* Use padding on a pseudo-element or container instead of margin to preserve hover area */
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  width: 240px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 380px;
+  /* roughly 9 items visible at once */
+  overflow-y: auto;
+
+  /* Hidden by default, reveal on hover of container */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+}
+
+/* Scrollbar styling for dropdown */
+.theme-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.theme-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.theme-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+body[class*="dark"] .theme-dropdown::-webkit-scrollbar-thumb,
+body[class*="midnight"] .theme-dropdown::-webkit-scrollbar-thumb,
+body[class*="contrast"] .theme-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Create an invisible bridge to catch the mouse during transit */
+.theme-selector-container::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.theme-selector-container:hover .theme-dropdown,
+.theme-selector-container.force-open .theme-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-15px);
+  /* Creates the 15px gap visually but hover bridge catches mouse */
+  pointer-events: auto;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--text-color);
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: background 0.2s ease, transform 0.2s ease;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.theme-option svg {
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+}
+
+.theme-option:hover,
+.theme-option.active {
+  background: rgba(125, 125, 125, 0.2);
+}
+
+.theme-option:active {
+  transform: scale(0.97);
+}
+
+/* Dynamic shadows for darker themes for better depth */
+body.theme-matte-dark .theme-selector-trigger,
+body.theme-midnight-blue .theme-selector-trigger,
+body.theme-cyber .theme-selector-trigger,
+body.theme-ocean-depths .theme-selector-trigger,
+body.theme-retro-arcade .theme-selector-trigger {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Adding texture using SVG Noise Filter to achieve a "matte" tactile finish */
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+  transition: opacity 0.6s ease;
+}
+
+body.theme-matte-dark .grain-overlay,
+body.theme-midnight-blue .grain-overlay {
+  opacity: 0.08;
+  /* Slightly stronger grain for darker matte themes */
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+
+  /* Icon-only mode for the two floating buttons on small screens */
+  .download-pdf-btn span,
+  .theme-selector-trigger #current-theme-name,
+  .theme-selector-trigger .chevron-icon {
+    display: none;
+  }
+
+  .download-pdf-btn {
+    padding: 12px;
+    border-radius: 50%;
+    bottom: 24px;
+    right: 24px;
+  }
+
+  .theme-selector-container {
+    bottom: 84px;
+    right: 24px;
+  }
+
+  .theme-selector-trigger {
+    padding: 12px;
+    border-radius: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 20px 10px;
+  }
+
+  .theme-toggle-container {
+    bottom: 24px;
+    right: 24px;
+    gap: 12px;
+  }
+
+  .theme-toggle-btn {
+    width: 56px;
+    height: 56px;
+  }
+
+  .theme-toggle-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+}
