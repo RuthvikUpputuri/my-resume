@@ -187,8 +187,8 @@ document.addEventListener('click', (e) => {
 // Force-download the PDF using fetch + blob (the `download` attr alone gets
 // ignored by browsers when the server doesn't send Content-Disposition: attachment)
 document.getElementById('download-pdf-btn').addEventListener('click', () => {
-    const pdfUrl = 'resume/Upputuri Ruthvik Product Management.pdf';
-    const fileName = 'Upputuri Ruthvik Product Management.pdf';
+    const pdfUrl = 'resume/Ruthvik_Upputuri_Product_Management-ema.pdf';
+    const fileName = 'Ruthvik_Upputuri_Product_Management-ema.pdf';
     fetch(pdfUrl)
         .then(res => res.blob())
         .then(blob => {
