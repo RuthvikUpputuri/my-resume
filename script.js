@@ -234,78 +234,80 @@ try {
 
     resumeContainer.appendChild(svgElement);
 
+    resumeContainer.appendChild(svgElement);
+
     // -- Make links clickable after it's in the live DOM --
-    // Map of text content substrings → full URLs
-    const linkMap = [
-        { text: 'ruthvik@upputuri.in', href: 'mailto:ruthvik@upputuri.in' },
-        { text: 'linkedin.upputuri.in', href: 'https://linkedin.upputuri.in' },
-        { text: 'ruthvik.upputuri.in', href: 'https://ruthvik.upputuri.in' },
-    ];
+    const svgtmp = resumeContainer.querySelector('svg');
+    if (svgtmp) {
+        // We know the links are specifically in `<text>` elements whose textContent contains these strings.
+        const allTexts = svgtmp.querySelectorAll('text');
 
-    // Helper: wrap a group element inside an SVG <a> tag
-    function wrapInLink(groupEl, href) {
-        const svgNS = 'http://www.w3.org/2000/svg';
-        const xlinkNS = 'http://www.w3.org/1999/xlink';
-        const anchor = document.createElementNS(svgNS, 'a');
-        anchor.setAttributeNS(xlinkNS, 'xlink:href', href);
-        anchor.setAttribute('href', href);
-        anchor.setAttribute('target', '_blank');
-        anchor.setAttribute('rel', 'noopener noreferrer');
-        anchor.style.cursor = 'pointer';
+        allTexts.forEach(textEl => {
+            const content = textEl.textContent.trim();
+            let href = null;
 
-        groupEl.parentNode.insertBefore(anchor, groupEl);
-        anchor.appendChild(groupEl);
-    }
-
-    // Scan all tspan elements for link-like content
-    const allTspans = svgElement.querySelectorAll('tspan');
-    allTspans.forEach(tspan => {
-        const content = tspan.textContent.trim();
-        for (const { text, href } of linkMap) {
-            if (content === text || (text.startsWith('ruthvik.') &&
-                (content === 'ruthvik' || content === 'upputuri' || content === 'in'))) {
-                // Only wrap the parent <g> if it isn't already inside an <a>
-                const parentG = tspan.closest('g');
-                if (parentG && parentG.parentNode && parentG.parentNode.tagName.toLowerCase() !== 'a') {
-                    wrapInLink(parentG, href);
-                }
-                break;
+            if (content.includes('ruthvik@upputuri.in')) {
+                href = 'mailto:ruthvik@upputuri.in';
+            } else if (content.includes('linkedin.upputuri.in')) {
+                href = 'https://linkedin.upputuri.in';
+            } else if (content === 'ruthvik' || content === 'upputuri' || (content === 'in' && textEl.innerHTML.includes('#0563c1')) || (content === '.' && textEl.innerHTML.includes('#0563c1'))) {
+                // The website is split into multiple texts in the SVG: "ruthvik", ".", "upputuri", ".", "in".
+                // We use the color #0563c1 to make sure we don't accidentally link random dots.
+                href = 'https://ruthvik.upputuri.in';
             }
-        }
-    });
 
-    // The third link (ruthvik.upputuri.in) is split across multiple <g> elements
-    // (g30=ruthvik, g31=., g32=upputuri, g33=., g34=in). 
-    // Re-scan to group them into a single anchor by detecting blue tspans in that y-band.
-    const svgInDom = resumeContainer.querySelector('svg');
-    if (svgInDom) {
-        const blueTspans = svgInDom.querySelectorAll('tspan[style*="fill:#0563c1"]');
-        // Gather groups that are NOT already wrapped
-        const websiteGroups = [];
-        blueTspans.forEach(ts => {
-            const txt = ts.textContent.trim();
-            // The website is at y≈80.96, email is at same y – differentiate by x position
-            const parentG = ts.closest('g');
-            if (parentG && parentG.parentNode.tagName.toLowerCase() !== 'a') {
-                const textEl = parentG.querySelector('text');
-                if (textEl) {
-                    const transform = textEl.getAttribute('transform') || '';
-                    const match = transform.match(/translate\([^,]+,\s*([\d.]+)\)/);
-                    // x-positions: email ~167, linkedin ~307, ruthvik.upputuri.in ~443+
-                    const xCoordMatch = transform.match(/matrix\([^,]+,[^,]+,[^,]+,[^,]+,([^,]+),/);
-                    if (xCoordMatch) {
-                        const xPos = parseFloat(xCoordMatch[1]);
-                        if (xPos > 420 && (txt === 'ruthvik' || txt === '.' || txt === 'upputuri' || txt === 'in')) {
-                            websiteGroups.push(parentG);
-                        }
-                    }
+            if (href) {
+                // Check if already wrapped
+                if (textEl.parentNode.tagName.toLowerCase() !== 'a') {
+                    const svgNS = 'http://www.w3.org/2000/svg';
+                    const anchor = document.createElementNS(svgNS, 'a');
+                    anchor.setAttribute('href', href);
+                    anchor.setAttribute('target', '_blank');
+                    anchor.setAttribute('rel', 'noopener noreferrer');
+                    anchor.style.cursor = 'pointer';
+
+                    // Add a hover effect class (optional, but good UX)
+                    anchor.classList.add('resume-link');
+
+                    textEl.parentNode.insertBefore(anchor, textEl);
+                    anchor.appendChild(textEl);
                 }
             }
         });
 
-        if (websiteGroups.length > 0) {
-            websiteGroups.forEach(g => wrapInLink(g, 'https://ruthvik.upputuri.in'));
-        }
+        // Handle the specific case where 'ruthvik', '.', 'upputuri', '.', 'in' are split across multiple <text> tags in the header
+        // We can find them by looking for the specific blue fill color `#0563c1` in that specific area
+        const blueTspans = svgtmp.querySelectorAll('tspan[fill="#0563c1"]');
+        blueTspans.forEach(tspan => {
+            const textEl = tspan.closest('text');
+            if (!textEl) return;
+
+            const content = tspan.textContent.trim();
+            // Specifically targeting the website which is broken up horizontally
+            const transform = textEl.getAttribute('transform') || '';
+            const match = transform.match(/matrix\([^,]+,\s*[^,]+,\s*[^,]+,\s*[^,]+,\s*([^,]+),\s*([^)]+)\)/);
+
+            if (match) {
+                const x = parseFloat(match[1]);
+                const y = parseFloat(match[2]);
+
+                // The website is around y=80 and x > 400
+                if (y > 75 && y < 85 && x > 400) {
+                    if (textEl.parentNode.tagName.toLowerCase() !== 'a') {
+                        const svgNS = 'http://www.w3.org/2000/svg';
+                        const anchor = document.createElementNS(svgNS, 'a');
+                        anchor.setAttribute('href', 'https://ruthvik.upputuri.in');
+                        anchor.setAttribute('target', '_blank');
+                        anchor.setAttribute('rel', 'noopener noreferrer');
+                        anchor.style.cursor = 'pointer';
+                        anchor.classList.add('resume-link');
+
+                        textEl.parentNode.insertBefore(anchor, textEl);
+                        anchor.appendChild(textEl);
+                    }
+                }
+            }
+        });
     }
 
 } catch (err) {
