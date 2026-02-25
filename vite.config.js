@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { compression } from 'vite-plugin-compression2';
 
 export default defineConfig({
     plugins: [
@@ -10,7 +11,8 @@ export default defineConfig({
                     dest: 'resume'
                 }
             ]
-        })
+        }),
+        compression()
     ],
     build: {
         outDir: 'dist',
