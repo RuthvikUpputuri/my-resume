@@ -1,3 +1,5 @@
+import { resumeSvgData } from './svg-data.js';
+
 const themes = [
     // --- ACCESSIBILITY THEMES (Sorted Alphabetically) ---
     {
